@@ -1,57 +1,56 @@
 {
   "name": "webcoin",
-  "version": "0.0.0-semantically-released",
+  "version": "2.2.2",
   "description": "Bitcoin client for Node.js and the browser",
   "main": "index.js",
-  "scripts": {
-    "test": "npm run standard && ./node_modules/.bin/tape test/*.js",
-    "standard": "./node_modules/.bin/standard lib/*.js test/*.js bin/*.js index.js ",
-    "prepublish": "semantic-release pre",
-    "postpublish": "semantic-release post"
-  },
-  "bin": {
-    "webcoin-bridge": "./bin/bridge.js"
-  },
-  "keywords": [
-    "bitcoin",
-    "client",
-    "spv",
-    "cryptocurrency",
-    "p2p"
-  ],
-  "author": "Matt Bell <mappum@gmail.com>",
-  "license": "MIT",
   "dependencies": {
-    "async": "^1.4.2",
-    "bitcoin": "^2.3.2",
-    "bitcore-lib": "^0.13.11",
-    "bitcore-p2p": "^1.1.0",
-    "bitcore-p2p-browserify": "^1.1.0",
-    "browserify-buffertools": "^1.0.2",
-    "buffertools": "^2.1.3",
-    "debug": "^2.2.0",
-    "level-js": "^2.2.1",
-    "leveldown": "^1.4.1",
-    "levelup": "^1.2.1",
-    "minimist": "^1.2.0",
-    "mkdirp": "^0.5.1",
-    "peerhub": "^0.1.1",
-    "setimmediate": "^1.0.2"
+    "bitcoin-filter": "^0.2.0",
+    "bitcoin-inventory": "^1.0.2",
+    "bitcoin-net": "^4.4.0",
+    "blockchain-download": "^1.1.1",
+    "blockchain-spv": "^2.1.0",
+    "object-assign": "^4.1.0",
+    "old": "^0.1.3",
+    "pump": "^1.0.1",
+    "sublevelup": "^4.0.0"
   },
   "devDependencies": {
-    "semantic-release": "^3.4.1",
-    "standard": "^5.2.1",
-    "tape": "^4.2.0"
+    "babel-cli": "^6.14.0",
+    "babel-preset-es2015": "^6.14.0",
+    "faucet": "0.0.1",
+    "levelup": "^1.3.2",
+    "memdown": "^1.2.0",
+    "nyc": "^8.1.0",
+    "standard": "^8.0.0",
+    "tape": "^4.6.0",
+    "webcoin-bitcoin": "^3.1.1"
   },
-  "browser": {
-    "buffertools": "browserify-buffertools",
-    "bitcore-p2p": "bitcore-p2p-browserify"
-  },
-  "optionalDependencies": {
-    "wrtc": "0.0.58"
+  "scripts": {
+    "test": "standard index.js src/*.js && nyc tape test/*.js | faucet && nyc report",
+    "test-browser": "npm run build && ./test/browser.sh && npm run source",
+    "build": "rm -rf lib && babel --presets es2015 src -d lib",
+    "source": "rm -rf lib && ln -s src lib",
+    "prepublish": "npm run build",
+    "publish": "npm run source"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mappum/webcoin"
-  }
+    "url": "git+https://github.com/mappum/webcoin.git"
+  },
+  "keywords": [
+    "webcoin",
+    "bitcoin",
+    "spv",
+    "client",
+    "webrtc",
+    "p2p",
+    "network",
+    "coins"
+  ],
+  "author": "Matt Bell <mappum@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mappum/webcoin/issues"
+  },
+  "homepage": "https://github.com/mappum/webcoin#readme"
 }
